@@ -1,0 +1,79 @@
+CREATE DATABASE RealEstateDb
+GO
+USE RealEstateDb;
+GO
+
+CREATE TABLE [Owner] (
+  IdOwner UNIQUEIDENTIFIER NOT NULL PRIMARY KEY,
+  Name NVARCHAR(200),
+  Address NVARCHAR(500),
+  PhotoFileName NVARCHAR(500),
+  Birthday DATETIME NULL,
+  ContactEmail NVARCHAR(200),
+  Phone NVARCHAR(50),
+  CreatedAt DATETIME DEFAULT GETUTCDATE(),
+  UpdatedAt DATETIME DEFAULT GETUTCDATE(),
+  IsActive BIT DEFAULT 1
+);
+
+CREATE TABLE [Property] (
+  IdProperty UNIQUEIDENTIFIER NOT NULL PRIMARY KEY,
+  Name NVARCHAR(200),
+  CodeInternal NVARCHAR(100),
+  Address NVARCHAR(500),
+  Price DECIMAL(18,2),
+  Year INT,
+  IdOwner UNIQUEIDENTIFIER,
+  Description NVARCHAR(MAX),
+  Bedrooms INT,
+  Bathrooms INT,
+  SquareMeters DECIMAL(10,2),
+  CreatedAt DATETIME DEFAULT GETUTCDATE(),
+  UpdatedAt DATETIME DEFAULT GETUTCDATE(),
+  IsActive BIT DEFAULT 1,
+  CONSTRAINT FK_Property_Owner FOREIGN KEY (IdOwner) 
+    REFERENCES [Owner](IdOwner)
+);
+
+CREATE TABLE [PropertyImage] (
+  IdPropertyImage UNIQUEIDENTIFIER NOT NULL PRIMARY KEY,
+  IdProperty UNIQUEIDENTIFIER,
+  FileName NVARCHAR(500),
+  ContentType NVARCHAR(100),
+  Size BIGINT,
+  Enabled BIT DEFAULT 1,
+  CreatedAt DATETIME DEFAULT GETUTCDATE(),
+  CONSTRAINT FK_PropertyImage_Property FOREIGN KEY (IdProperty) 
+    REFERENCES [Property](IdProperty)
+);
+
+CREATE TABLE [PropertyTrace] (
+  IdPropertyTrace UNIQUEIDENTIFIER NOT NULL PRIMARY KEY,
+  IdProperty UNIQUEIDENTIFIER,
+  DateSale DATETIME,
+  Name NVARCHAR(200),
+  Value DECIMAL(18,2),
+  Tax DECIMAL(18,2),
+  TraceType NVARCHAR(100),
+  Notes NVARCHAR(MAX),
+  CONSTRAINT FK_PropertyTrace_Property FOREIGN KEY (IdProperty) 
+    REFERENCES [Property](IdProperty)
+);
+
+CREATE TABLE [AppUser] (
+  IdUser UNIQUEIDENTIFIER NOT NULL PRIMARY KEY,
+  Username NVARCHAR(100) UNIQUE,
+  PasswordHash NVARCHAR(256),
+  FullName NVARCHAR(200),
+  Role NVARCHAR(50),
+  CreatedAt DATETIME DEFAULT GETUTCDATE(),
+  IsActive BIT DEFAULT 1
+);
+
+
+CREATE TABLE [ErrorLogForStoreProcedure] (
+  IdErrorLog     INT IDENTITY(1,1) PRIMARY KEY,
+  StoreProcedure NVARCHAR(200) NOT NULL,
+  ErrorDate      DATETIME NOT NULL DEFAULT(GETDATE()),
+  ErrorMessage   NVARCHAR(MAX) NOT NULL
+);

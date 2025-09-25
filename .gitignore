@@ -1,0 +1,7 @@
+bin/
+obj/
+Data/Images/
+.vs/
+**/*.user
+**/*.suo
+**/*.db
