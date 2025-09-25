@@ -1,0 +1,674 @@
+{
+	"info": {
+		"_postman_id": "be950240-9a50-4398-b805-6ec4d0262d4c",
+		"name": "RealEstate",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "25366834"
+	},
+	"item": [
+		{
+			"name": "Auth/register",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "accept",
+						"value": "*/*"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"username\": \"Million\",\r\n  \"password\": \"Million\",\r\n  \"fullName\": \"Million\",\r\n  \"role\": \"Admin\"\r\n}"
+				},
+				"url": {
+					"raw": "https://localhost:44373/api/Auth/register",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44373",
+					"path": [
+						"api",
+						"Auth",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Auth/login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"if (pm.response.code === 200) {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    if (jsonData.token) {\r",
+							"        pm.collectionVariables.set(\"token\", jsonData.token);\r",
+							"        pm.collectionVariables.set(\"tokenExpiry\", new Date().getTime() + (jsonData.expiresIn * 1000));\r",
+							"    }\r",
+							"}"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "accept",
+						"value": "*/*"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"username\": \"Million\",\r\n  \"password\": \"Million\"\r\n}"
+				},
+				"url": {
+					"raw": "https://localhost:44373/api/Auth/login",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44373",
+					"path": [
+						"api",
+						"Auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetOwners",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "accept",
+						"value": "*/*",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": " Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://localhost:44373/api/Owners",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44373",
+					"path": [
+						"api",
+						"Owners"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetOwnersById",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "accept",
+						"value": "*/*",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": " Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://localhost:44373/api/Owners/c9bb477f-2149-45a2-bb18-5dac15658c8d",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44373",
+					"path": [
+						"api",
+						"Owners",
+						"c9bb477f-2149-45a2-bb18-5dac15658c8d"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreateOwners",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "accept",
+						"value": "*/*",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": " Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"Million\",\r\n  \"address\": \"123 Million\",\r\n  \"contactEmail\": \"Million@hotmail.com\",\r\n  \"photoFileName\": \"Million.jpg\",\r\n  \"birthday\": \"2025-09-24T03:56:31.039Z\",\r\n  \"phone\": \"3143435432\"\r\n}"
+				},
+				"url": {
+					"raw": "https://localhost:44373/api/Owners",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44373",
+					"path": [
+						"api",
+						"Owners"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateOwners",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "accept",
+						"value": "*/*",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": " Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"Million\",\r\n  \"address\": \"123 Million\",\r\n  \"contactEmail\": \"Million\",\r\n  \"photoFileName\": \"Million.jpg\",\r\n  \"birthday\": \"2025-09-24T04:12:57.890Z\",\r\n  \"phone\": \"3143435323\"\r\n}"
+				},
+				"url": {
+					"raw": "https://localhost:44373/api/Owners/c9bb477f-2149-45a2-bb18-5dac15658c8d",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44373",
+					"path": [
+						"api",
+						"Owners",
+						"c9bb477f-2149-45a2-bb18-5dac15658c8d"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetPropertiesWithFilters",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "accept",
+						"value": "*/*",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": " Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://localhost:44373/api/Properties?Name=Million&CodeInternal=1&Address=test&MinPrice=0&MaxPrice=100&MinYear=1&MaxYear=10000&IdOwner=C9BB477F-2149-45A2-BB18-5DAC15658C8D&Page=1&PageSize=20",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44373",
+					"path": [
+						"api",
+						"Properties"
+					],
+					"query": [
+						{
+							"key": "Name",
+							"value": "Million"
+						},
+						{
+							"key": "CodeInternal",
+							"value": "1"
+						},
+						{
+							"key": "Address",
+							"value": "test"
+						},
+						{
+							"key": "MinPrice",
+							"value": "0"
+						},
+						{
+							"key": "MaxPrice",
+							"value": "100"
+						},
+						{
+							"key": "MinYear",
+							"value": "1"
+						},
+						{
+							"key": "MaxYear",
+							"value": "10000"
+						},
+						{
+							"key": "IdOwner",
+							"value": "C9BB477F-2149-45A2-BB18-5DAC15658C8D"
+						},
+						{
+							"key": "Page",
+							"value": "1"
+						},
+						{
+							"key": "PageSize",
+							"value": "20"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetPropertiesById",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "accept",
+						"value": "*/*",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": " Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://localhost:44373/api/Properties/e443a212-f791-4c6d-83b3-1c952de505cd",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44373",
+					"path": [
+						"api",
+						"Properties",
+						"e443a212-f791-4c6d-83b3-1c952de505cd"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreateProperties",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "accept",
+						"value": "*/*",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": " Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"Million\",\r\n  \"codeInternal\": \"1\",\r\n  \"address\": \"123 Million\",\r\n  \"price\": 200000,\r\n  \"year\": 2000,\r\n  \"idOwner\": \"c9bb477f-2149-45a2-bb18-5dac15658c8d\",\r\n  \"description\": \"test\",\r\n  \"bedrooms\": 10,\r\n  \"bathrooms\": 10,\r\n  \"squareMeters\": 1000\r\n}"
+				},
+				"url": {
+					"raw": "https://localhost:44373/api/Properties",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44373",
+					"path": [
+						"api",
+						"Properties"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateProperties",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "accept",
+						"value": "*/*",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": " Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"Million\",\r\n  \"codeInternal\": \"1\",\r\n  \"address\": \"123 Million\",\r\n  \"price\": 2000,\r\n  \"year\": 2020,\r\n  \"idOwner\": \"C9BB477F-2149-45A2-BB18-5DAC15658C8D\",\r\n  \"description\": \"test\",\r\n  \"bedrooms\": 10,\r\n  \"bathrooms\": 10,\r\n  \"squareMeters\": 10\r\n}"
+				},
+				"url": {
+					"raw": "https://localhost:44373/api/Properties/e443a212-f791-4c6d-83b3-1c952de505cd",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44373",
+					"path": [
+						"api",
+						"Properties",
+						"e443a212-f791-4c6d-83b3-1c952de505cd"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdatePropertiesPrice",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "accept",
+						"value": "*/*",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": " Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"newPrice\": 23424,\r\n  \"reason\": \"new\"\r\n}"
+				},
+				"url": {
+					"raw": "https://localhost:44373/api/Properties/e443a212-f791-4c6d-83b3-1c952de505cd/price",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44373",
+					"path": [
+						"api",
+						"Properties",
+						"e443a212-f791-4c6d-83b3-1c952de505cd",
+						"price"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetpropertiesTraces",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "accept",
+						"value": "*/*",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": " Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://localhost:44373/api/properties/E443A212-F791-4C6D-83B3-1C952DE505CD/Traces",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44373",
+					"path": [
+						"api",
+						"properties",
+						"E443A212-F791-4C6D-83B3-1C952DE505CD",
+						"Traces"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreatePropertiesTraces",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "accept",
+						"value": "*/*"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"dateSale\": \"2025-09-24T04:43:37.572Z\",\r\n  \"name\": \"Million\",\r\n  \"value\": 20000,\r\n  \"tax\": 20,\r\n  \"traceType\": \"Million\",\r\n  \"notes\": \"test\"\r\n}"
+				},
+				"url": {
+					"raw": "https://localhost:44373/api/properties/E443A212-F791-4C6D-83B3-1C952DE505CD/Traces",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44373",
+					"path": [
+						"api",
+						"properties",
+						"E443A212-F791-4C6D-83B3-1C952DE505CD",
+						"Traces"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdatePropertiesTraces",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "accept",
+						"value": "*/*",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": " Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"dateSale\": \"2025-09-24T04:45:36.519Z\",\r\n  \"name\": \"Million\",\r\n  \"value\": 200000,\r\n  \"tax\": 10,\r\n  \"traceType\": \"Million test\",\r\n  \"notes\": \"test\"\r\n}"
+				},
+				"url": {
+					"raw": "https://localhost:44373/api/properties/E443A212-F791-4C6D-83B3-1C952DE505CD/Traces/BCF8C3B3-0100-42B9-9545-4C9E49A6E9D6",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44373",
+					"path": [
+						"api",
+						"properties",
+						"E443A212-F791-4C6D-83B3-1C952DE505CD",
+						"Traces",
+						"BCF8C3B3-0100-42B9-9545-4C9E49A6E9D6"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreatePropertiesImages",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "accept",
+						"value": "*/*",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": " Bearer {{token}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": " multipart/form-data",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"contentType": "image/png",
+							"type": "file",
+							"src": [
+								"Captura de pantalla (1).png",
+								"/C:/Users/DELL/Pictures/Screenshots/Captura de pantalla (1).png"
+							]
+						}
+					]
+				},
+				"url": {
+					"raw": "https://localhost:44373/api/properties/E443A212-F791-4C6D-83B3-1C952DE505CD/Images",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44373",
+					"path": [
+						"api",
+						"properties",
+						"E443A212-F791-4C6D-83B3-1C952DE505CD",
+						"Images"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetPropertiesImages",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "accept",
+						"value": "*/*",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": " Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://localhost:44373/api/properties/E443A212-F791-4C6D-83B3-1C952DE505CD/Images",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44373",
+					"path": [
+						"api",
+						"properties",
+						"E443A212-F791-4C6D-83B3-1C952DE505CD",
+						"Images"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "token",
+			"value": ""
+		},
+		{
+			"key": "tokenExpiry",
+			"value": ""
+		}
+	]
+}
