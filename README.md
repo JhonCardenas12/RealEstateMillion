@@ -7,12 +7,13 @@ Plataforma de gestión inmobiliaria construida con **.NET 8** siguiendo principi
 ## Tecnologías utilizadas
 
 - **.NET 8** (ASP.NET Core Web API)
-- **Entity Framework Core / Dapper**
+- **Dapper**
 - **SQL Server 2022** (base de datos)
 - **AutoMapper**
+- **FluentValidation**
 - **Serilog** (logging estructurado)
 - **NUnit + Moq** (pruebas unitarias)
-- **Docker & Docker Compose**
+- **Docker**
 
 ---
 
